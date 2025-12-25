@@ -10,6 +10,11 @@ import { InputNode } from './nodes/inputNode';
 import { LLMNode } from './nodes/llmNode';
 import { OutputNode } from './nodes/outputNode';
 import { TextNode } from './nodes/textNode';
+import { ConsoleLogNode } from './nodes/consoleLogNode';
+import { JSONInputNode } from './nodes/jsonInputNode';
+import { ConcatNode } from './nodes/concatNode';
+import { TextFormatterNode } from './nodes/textFormatterNode';
+import { ValidatorNode } from './nodes/validatorNode';
 
 import 'reactflow/dist/style.css';
 
@@ -20,6 +25,11 @@ const nodeTypes = {
   llm: LLMNode,
   customOutput: OutputNode,
   text: TextNode,
+  consoleLog: ConsoleLogNode,
+  jsonInput: JSONInputNode,
+  concat: ConcatNode,
+  textFormatter: TextFormatterNode,
+  validator: ValidatorNode,
 };
 
 const selector = (state) => ({
