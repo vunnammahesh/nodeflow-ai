@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Position } from 'reactflow';
 import { BaseNode } from './BaseNode';
-import { HandlePositions, createHandle } from './NodeFactory';
+import { PresetHandles } from './NodeFactory';
 
 export const InputNode = ({ id, data }) => {
   const [currName, setCurrName] = useState(data?.inputName || id.replace('customInput-', 'input_'));
@@ -39,7 +39,7 @@ export const InputNode = ({ id, data }) => {
         </label>
       </div>
     ),
-    handles: [createHandle(`${id}-input`, HandlePositions.SOURCE_RIGHT)],
+    handles: PresetHandles.INPUT_ONLY(id),
   };
 
   return <BaseNode id={id} config={config} />;

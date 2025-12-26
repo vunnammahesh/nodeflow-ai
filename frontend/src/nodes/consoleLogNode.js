@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { BaseNode } from './BaseNode';
-import { HandlePositions, createHandle, createTextInput, createSelectInput } from './NodeFactory';
+import { createTextInput, createSelectInput, LogLevelOptions, PresetHandles } from './NodeFactory';
 
 export const ConsoleLogNode = ({ id, data }) => {
   const [logLevel, setLogLevel] = useState(data?.logLevel || 'log');
@@ -16,25 +16,15 @@ export const ConsoleLogNode = ({ id, data }) => {
     setLabel(e.target.value);
   };
 
-  const logLevelOptions = [
-    { value: 'log', label: 'Log' },
-    { value: 'info', label: 'Info' },
-    { value: 'warn', label: 'Warn' },
-    { value: 'error', label: 'Error' },
-  ];
-
   const config = {
     title: 'Console Log',
     content: (
       <div>
         {createTextInput('Label', label, handleLabelChange)}
-        {createSelectInput('Level', logLevel, handleLevelChange, logLevelOptions)}
+        {createSelectInput('Level', logLevel, handleLevelChange, LogLevelOptions)}
       </div>
     ),
-    handles: [
-      createHandle(`${id}-input`, HandlePositions.TARGET_LEFT),
-      createHandle(`${id}-output`, HandlePositions.SOURCE_RIGHT),
-    ],
+    handles: PresetHandles.PASSTHROUGH(id),
   };
 
   return <BaseNode id={id} config={config} />;

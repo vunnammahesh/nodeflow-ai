@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { BaseNode } from './BaseNode';
-import { HandlePositions, createHandle, createSelectInput } from './NodeFactory';
+import { createSelectInput, TextFormatOptions, PresetHandles } from './NodeFactory';
 import { useStore } from '../store';
 
 export const TextFormatterNode = ({ id, data }) => {
@@ -15,24 +15,14 @@ export const TextFormatterNode = ({ id, data }) => {
     updateNodeField(id, 'format', value);
   };
 
-  const formatOptions = [
-    { value: 'uppercase', label: 'Uppercase' },
-    { value: 'lowercase', label: 'Lowercase' },
-    { value: 'trim', label: 'Trim' },
-    { value: 'capitalize', label: 'Capitalize' },
-  ];
-
   const config = {
     title: 'Text Formatter',
     content: (
       <div>
-        {createSelectInput('Format', format, handleFormatChange, formatOptions)}
+        {createSelectInput('Format', format, handleFormatChange, TextFormatOptions)}
       </div>
     ),
-    handles: [
-      createHandle(`${id}-input`, HandlePositions.TARGET_LEFT),
-      createHandle(`${id}-output`, HandlePositions.SOURCE_RIGHT),
-    ],
+    handles: PresetHandles.PASSTHROUGH(id),
   };
 
   return <BaseNode id={id} config={config} />;

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { BaseNode } from './BaseNode';
-import { HandlePositions, createHandle, createTextInput, createSelectInput } from './NodeFactory';
+import { HandlePositions, createHandle, createTextInput, createSelectInput, PresetHandles } from './NodeFactory';
 import { useStore } from '../store';
 
 export const ConcatNode = ({ id, data }) => {
@@ -46,7 +46,7 @@ export const ConcatNode = ({ id, data }) => {
     ),
     handles: [
       ...inputHandles,
-      createHandle(`${id}-output`, HandlePositions.SOURCE_RIGHT),
+      ...PresetHandles.INPUT_ONLY(id),
     ],
     containerStyle: {
       width: 220,

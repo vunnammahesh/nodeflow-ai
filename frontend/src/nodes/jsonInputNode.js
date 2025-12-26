@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { BaseNode } from './BaseNode';
-import { HandlePositions, createHandle } from './NodeFactory';
+import { PresetHandles } from './NodeFactory';
 
 export const JSONInputNode = ({ id, data }) => {
   const [jsonValue, setJsonValue] = useState(data?.jsonValue || '{}');
@@ -49,7 +49,7 @@ export const JSONInputNode = ({ id, data }) => {
         )}
       </div>
     ),
-    handles: [createHandle(`${id}-output`, HandlePositions.SOURCE_RIGHT)],
+    handles: PresetHandles.INPUT_ONLY(id),
     containerStyle: {
       width: 240,
       height: 'auto',
