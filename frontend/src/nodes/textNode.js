@@ -127,15 +127,16 @@ export const TextNode = ({ id, data }) => {
       return;
     }
 
-    // Find output handle of source node (usually {id}-output)
+    // Use the actual node ID for the handle names
     const sourceHandle = `${sourceNode.id}-output`;
+    const targetHandle = `${id}-input`; // Single input handle for all variables
 
     // Create connection
     const connection = {
       source: sourceNode.id,
       target: id,
       sourceHandle: sourceHandle,
-      targetHandle: `${id}-${pendingConnection}`,
+      targetHandle: targetHandle,
     };
 
     console.log('Creating connection:', connection);
@@ -154,16 +155,8 @@ export const TextNode = ({ id, data }) => {
     v.id.toLowerCase().includes(filterText.toLowerCase())
   );
 
-  const variableHandles = detectedVariables.map((varName) =>
-    createHandle(`${id}-${varName}`, HandlePositions.TARGET_LEFT, {
-      label: varName,
-    })
-  );
-
-  const allHandles = [
-    ...variableHandles,
-    ...PresetHandles.INPUT_ONLY(id),
-  ];
+  // Use PASSTHROUGH handles: single input for variables, single output for text
+  const allHandles = PresetHandles.PASSTHROUGH(id);
 
   const handleTextChange = (e) => {
     const newText = e.target.value;
