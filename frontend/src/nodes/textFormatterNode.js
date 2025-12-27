@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { BaseNode } from './BaseNode';
 import { createSelectInput, TextFormatOptions, PresetHandles } from './NodeFactory';
 import { useStore } from '../store';
+import '../styles/nodeStyles.css';
 
 export const TextFormatterNode = ({ id, data }) => {
   const [format, setFormat] = useState(data?.format || 'uppercase');
@@ -18,7 +19,7 @@ export const TextFormatterNode = ({ id, data }) => {
   const config = {
     title: 'Text Formatter',
     content: (
-      <div>
+      <div className="flex-col gap-md">
         {createSelectInput('Format', format, handleFormatChange, TextFormatOptions)}
       </div>
     ),

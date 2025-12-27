@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { BaseNode } from './BaseNode';
 import { createSelectInput, ValidationOptions, PresetHandles } from './NodeFactory';
 import { useStore } from '../store';
+import '../styles/nodeStyles.css';
 
 export const ValidatorNode = ({ id, data }) => {
   const [validationType, setValidationType] = useState(data?.validationType || 'email');
@@ -18,7 +19,7 @@ export const ValidatorNode = ({ id, data }) => {
   const config = {
     title: 'Validator',
     content: (
-      <div>
+      <div className="flex-col gap-md">
         {createSelectInput('Type', validationType, handleValidationChange, ValidationOptions)}
       </div>
     ),

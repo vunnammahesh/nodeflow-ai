@@ -17,24 +17,24 @@ export const HandlePositions = {
 };
 
 export const createTextInput = (label, value, onChange, style = {}) => (
-  <label style={{ display: 'block', marginBottom: '4px', ...style }}>
-    {label}:
+  <div className="label-group">
+    <label className="label">{label}</label>
     <input
       type="text"
       value={value}
       onChange={onChange}
-      style={{ width: '100%', padding: '2px', marginTop: '2px' }}
+      className="input-base"
     />
-  </label>
+  </div>
 );
 
 export const createSelectInput = (label, value, onChange, options, style = {}) => (
-  <label style={{ display: 'block', marginBottom: '4px', ...style }}>
-    {label}:
+  <div className="label-group">
+    <label className="label">{label}</label>
     <select
       value={value}
       onChange={onChange}
-      style={{ width: '100%', padding: '2px', marginTop: '2px' }}
+      className="input-base"
     >
       {options.map((option) => (
         <option key={option.value} value={option.value}>
@@ -42,7 +42,7 @@ export const createSelectInput = (label, value, onChange, options, style = {}) =
         </option>
       ))}
     </select>
-  </label>
+  </div>
 );
 
 

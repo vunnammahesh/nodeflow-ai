@@ -1,7 +1,9 @@
 // outputNode.js
 
 import { useState } from 'react';
-import { Handle, Position } from 'reactflow';
+import { BaseNode } from './BaseNode';
+import '../styles/nodeStyles.css';
+import { PresetHandles } from './NodeFactory';
 
 export const OutputNode = ({ id, data }) => {
   const [currName, setCurrName] = useState(data?.outputName || id.replace('customOutput-', 'output_'));
@@ -14,34 +16,29 @@ export const OutputNode = ({ id, data }) => {
   const handleTypeChange = (e) => {
     setOutputType(e.target.value);
   };
-
-  return (
-    <div style={{width: 200, height: 80, border: '1px solid black'}}>
-      <Handle
-        type="target"
-        position={Position.Left}
-        id={`${id}-value`}
-      />
-      <div>
-        <span>Output</span>
-      </div>
-      <div>
-        <label>
-          Name:
+  const config = {
+    title : "Output",
+    content:(<div className="flex-col gap-md">
+        <div className="label-group">
+          <label className="label">Name</label>
           <input 
             type="text" 
             value={currName} 
-            onChange={handleNameChange} 
+            onChange={handleNameChange}
+            className="input-base"
+            placeholder="output_0"
           />
-        </label>
-        <label>
-          Type:
-          <select value={outputType} onChange={handleTypeChange}>
+        </div>
+        <div className="label-group">
+          <label className="label">Type</label>
+          <select value={outputType} onChange={handleTypeChange} className="input-base">
             <option value="Text">Text</option>
-            <option value="File">Image</option>
+            <option value="Image">Image</option>
           </select>
-        </label>
-      </div>
-    </div>
-  );
+        </div>
+    </div>),
+    handles:PresetHandles.OUTPUT_ONLY(id)
+  }
+
+  return <BaseNode id={id} config = {config}/>
 }

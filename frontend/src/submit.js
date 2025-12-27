@@ -1,10 +1,12 @@
 // submit.js
 
+import './styles/nodeStyles.css';
+
 export const SubmitButton = () => {
 
     return (
-        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-            <button type="submit">Submit</button>
+        <div className="button-submit-wrapper">
+            <button type="submit" className="btn btn-primary">Submit</button>
         </div>
     );
 }
