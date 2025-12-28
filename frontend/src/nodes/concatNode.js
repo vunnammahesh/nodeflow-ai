@@ -2,16 +2,21 @@
 
 import { useState } from 'react';
 import { BaseNode } from './BaseNode';
-import { HandlePositions, createHandle, createTextInput, createSelectInput, PresetHandles } from './NodeFactory';
+import {
+  createTextInput,
+  createSelectInput,
+  PresetHandles,
+} from './NodeFactory';
 import { useStore } from '../store';
 
 export const ConcatNode = ({ id, data }) => {
   const [numInputs, setNumInputs] = useState(data?.numInputs || 2);
   const [outputField, setOutputField] = useState(data?.outputField || 'merged');
+
   const updateNodeField = useStore((state) => state.updateNodeField);
 
   const handleInputsChange = (e) => {
-    const value = parseInt(e.target.value);
+    const value = parseInt(e.target.value, 10);
     setNumInputs(value);
     updateNodeField(id, 'numInputs', value);
   };
@@ -29,29 +34,26 @@ export const ConcatNode = ({ id, data }) => {
     { value: '5', label: '5 Inputs' },
   ];
 
-  // Generate input handles for each input
-  const inputHandles = Array.from({ length: numInputs }, (_, i) =>
-    createHandle(`${id}-input-${i}`, HandlePositions.TARGET_LEFT, {
-      label: `Value ${i + 1}`,
-    })
-  );
-
   const config = {
     title: 'Concat / Merge',
     content: (
       <div>
-        {createSelectInput('Inputs', numInputs.toString(), handleInputsChange, inputOptions)}
+        {createSelectInput(
+          'Inputs',
+          numInputs.toString(),
+          handleInputsChange,
+          inputOptions
+        )}
         {createTextInput('Output Field', outputField, handleOutputChange)}
       </div>
     ),
+
+    // 👇 Handles are now fully abstracted
     handles: [
-      ...inputHandles,
-      ...PresetHandles.INPUT_ONLY(id),
+      ...PresetHandles.MULTI_INPUT(id, numInputs),
+      ...PresetHandles.MULTI_OUTPUT(id,1)
+      
     ],
-    containerStyle: {
-      width: 220,
-      height: 120 + (numInputs - 2) * 15,
-    },
   };
 
   return <BaseNode id={id} config={config} />;

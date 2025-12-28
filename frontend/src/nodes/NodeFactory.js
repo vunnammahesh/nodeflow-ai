@@ -3,20 +3,18 @@
 import { Position } from 'reactflow';
 
 export const HandlePositions = {
-  // Source handles (output only)
   SOURCE_RIGHT: {
     type: 'source',
     position: Position.Right,
   },
-  
-  // Target handles (input only)
+
   TARGET_LEFT: {
     type: 'target',
     position: Position.Left,
-  }
+  },
 };
 
-export const createTextInput = (label, value, onChange, style = {}) => (
+export const createTextInput = (label, value, onChange) => (
   <div className="label-group">
     <label className="label">{label}</label>
     <input
@@ -28,7 +26,7 @@ export const createTextInput = (label, value, onChange, style = {}) => (
   </div>
 );
 
-export const createSelectInput = (label, value, onChange, options, style = {}) => (
+export const createSelectInput = (label, value, onChange, options) => (
   <div className="label-group">
     <label className="label">{label}</label>
     <select
@@ -45,28 +43,97 @@ export const createSelectInput = (label, value, onChange, options, style = {}) =
   </div>
 );
 
-
 export const createHandle = (id, position, options = {}) => ({
   id,
   ...position,
-  ...options,
+  ...options, // label, offsetY, etc.
 });
 
-export const PresetHandles = {
-  INPUT_ONLY: (id) => [
-    createHandle(`${id}-output`, HandlePositions.SOURCE_RIGHT),
-  ],
+export const createHandleGroup = ({
+  nodeId,
+  count,
+  side,
+  idPrefix = 'input',
+  labelPrefix = '',
+  contentTop = 48,      // header + padding
+  contentHeight = 120,  // expected content area 
+  handleSize = 10,   // approximate handle height
+  gap = 24,          // spacing between handles
+}) => {
+  if (count <= 0) return [];
+   const centerY = contentTop + contentHeight / 2;
+  const totalHeight =
+    count * handleSize + (count - 1) * gap;
 
-  OUTPUT_ONLY: (id) => [
-    createHandle(`${id}-input`, HandlePositions.TARGET_LEFT),
-  ],
+  const startOffset = centerY - totalHeight / 2;
 
-  PASSTHROUGH: (id) => [
-    createHandle(`${id}-input`, HandlePositions.TARGET_LEFT),
-    createHandle(`${id}-output`, HandlePositions.SOURCE_RIGHT),
-  ],
+  return Array.from({ length: count }, (_, i) =>
+    createHandle(`${nodeId}-${idPrefix}-${i}`, side, {
+      label: labelPrefix ? `${labelPrefix} ${i + 1}` : undefined,
+      offsetY: startOffset + i * (handleSize + gap),
+    })
+  );
 };
 
+export const PresetHandles = {
+  // One output only
+  INPUT_ONLY: (id) =>
+    createHandleGroup({
+      nodeId: id,
+      count: 1,
+      side: HandlePositions.SOURCE_RIGHT,
+      idPrefix: 'output',
+      labelPrefix: 'Output',
+    }),
+
+  // One input only
+  OUTPUT_ONLY: (id) =>
+    createHandleGroup({
+      nodeId: id,
+      count: 1,
+      side: HandlePositions.TARGET_LEFT,
+      idPrefix: 'input',
+      labelPrefix: 'Input',
+    }),
+
+  // One input + one output
+  PASSTHROUGH: (id) => [
+    ...createHandleGroup({
+      nodeId: id,
+      count: 1,
+      side: HandlePositions.TARGET_LEFT,
+      idPrefix: 'input',
+      labelPrefix: 'Input',
+    }),
+    ...createHandleGroup({
+      nodeId: id,
+      count: 1,
+      side: HandlePositions.SOURCE_RIGHT,
+      idPrefix: 'output',
+      labelPrefix: 'Output',
+    }),
+  ],
+
+  // Multiple inputs on the left
+  MULTI_INPUT: (id, count = 3) =>
+    createHandleGroup({
+      nodeId: id,
+      count,
+      side: HandlePositions.TARGET_LEFT,
+      idPrefix: 'input',
+      labelPrefix: 'Value',
+    }),
+
+  // Multiple outputs on the right
+  MULTI_OUTPUT: (id, count = 2) =>
+    createHandleGroup({
+      nodeId: id,
+      count,
+      side: HandlePositions.SOURCE_RIGHT,
+      idPrefix: 'out',
+      labelPrefix: 'Out',
+    }),
+};
 
 export const ValidationOptions = [
   { value: 'email', label: 'Email' },
@@ -76,7 +143,6 @@ export const ValidationOptions = [
   { value: 'length', label: 'Length' },
   { value: 'custom', label: 'Custom Regex' },
 ];
-
 
 export const TextFormatOptions = [
   { value: 'uppercase', label: 'Uppercase' },

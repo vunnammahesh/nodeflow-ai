@@ -30,6 +30,9 @@ export const BaseNode = ({ id, config }) => {
           position={handle.position}
           label={handle.label}
           className={`node-handle node-handle--${handle.type}`}
+          style={{
+            top: handle.offsetY,
+          }}
         />
       ))}
     </div>
