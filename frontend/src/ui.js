@@ -15,6 +15,7 @@ import { JSONInputNode } from './nodes/jsonInputNode';
 import { ConcatNode } from './nodes/concatNode';
 import { TextFormatterNode } from './nodes/textFormatterNode';
 import { ValidatorNode } from './nodes/validatorNode';
+import { ValidationErrorModal } from './components/ValidationErrorModal'
 
 import 'reactflow/dist/style.css';
 
@@ -54,6 +55,10 @@ export const PipelineUI = () => {
       onEdgesChange,
       onConnect
     } = useStore(selector, shallow);
+    const { validationError, clearValidationError } = useStore(state => ({
+        validationError: state.validationError,
+        clearValidationError: state.clearValidationError,
+      }));
 
     const getInitNodeData = (nodeID, type) => {
       let nodeData = { id: nodeID, nodeType: `${type}` };
@@ -119,7 +124,13 @@ export const PipelineUI = () => {
                 <Controls />
                 <MiniMap />
             </ReactFlow>
+            <ValidationErrorModal
+              isOpen={!!validationError}
+              error={validationError}
+              onClose={clearValidationError}
+            />
         </div>
         </>
     )
+    
 }

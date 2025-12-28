@@ -4,6 +4,8 @@ import { useState } from 'react';
 import './styles/nodeStyles.css';
 import { useStore } from './store';
 import { PipelineAnalysisModal } from './components/PipelineAnalysisModal';
+import { ValidationErrorModal } from './components/ValidationErrorModal';
+import { findDisconnectedNodes } from './Validations/pipelineValidation';
 
 export const SubmitButton = () => {
     const { nodes, edges } = useStore((state) => ({
@@ -13,8 +15,21 @@ export const SubmitButton = () => {
 
     const [modalOpen, setModalOpen] = useState(false);
     const [analysisData, setAnalysisData] = useState(null);
+    const [errorModalOpen, setErrorModalOpen] = useState(false);
+    const [validationError, setValidationError] = useState('');
+
 
     const handleSubmit = async () => {
+        const disconnectedNodes = findDisconnectedNodes(nodes, edges);
+        if (disconnectedNodes.length > 0) {
+    setValidationError(
+      `The following node(s) are not connected: ${disconnectedNodes
+        .map((n) => n.id)
+        .join(', ')}`
+    );
+    setErrorModalOpen(true);
+    return; 
+  }
         try {
             const response = await fetch('http://localhost:8000/pipelines/parse', {
                 method: 'POST',
@@ -51,6 +66,11 @@ export const SubmitButton = () => {
                 isOpen={modalOpen} 
                 data={analysisData} 
                 onClose={() => setModalOpen(false)} 
+            />
+            <ValidationErrorModal
+                isOpen={errorModalOpen}
+                error={validationError}
+                onClose={() => setErrorModalOpen(false)}
             />
         </>
     );
