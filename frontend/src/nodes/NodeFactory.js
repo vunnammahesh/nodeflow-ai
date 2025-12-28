@@ -53,26 +53,21 @@ export const createHandle = (id, position, options = {}) => ({
 });
 
 export const PresetHandles = {
-  // Input only (data source)
   INPUT_ONLY: (id) => [
     createHandle(`${id}-output`, HandlePositions.SOURCE_RIGHT),
   ],
 
-  // Output only (data sink)
   OUTPUT_ONLY: (id) => [
     createHandle(`${id}-input`, HandlePositions.TARGET_LEFT),
   ],
 
-  // Simple pass-through (input → output)
   PASSTHROUGH: (id) => [
     createHandle(`${id}-input`, HandlePositions.TARGET_LEFT),
     createHandle(`${id}-output`, HandlePositions.SOURCE_RIGHT),
   ],
 };
 
-/**
- * Centralized validation type options
- */
+
 export const ValidationOptions = [
   { value: 'email', label: 'Email' },
   { value: 'url', label: 'URL' },
@@ -82,9 +77,7 @@ export const ValidationOptions = [
   { value: 'custom', label: 'Custom Regex' },
 ];
 
-/**
- * Centralized text format options
- */
+
 export const TextFormatOptions = [
   { value: 'uppercase', label: 'Uppercase' },
   { value: 'lowercase', label: 'Lowercase' },
@@ -92,9 +85,6 @@ export const TextFormatOptions = [
   { value: 'capitalize', label: 'Capitalize' },
 ];
 
-/**
- * Centralized log level options
- */
 export const LogLevelOptions = [
   { value: 'log', label: 'Log' },
   { value: 'info', label: 'Info' },

@@ -1,6 +1,3 @@
-/* ============================================================
-   NODE STYLES - Unified CSS for node-based workflow editor
-   ============================================================ */
 
 :root {
   --color-primary: #7C3AED;
@@ -32,10 +29,6 @@
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
-/* ============================================================
-   VARIABLE BADGES
-   ============================================================ */
-
 .variable-badge {
   display: inline-block;
   padding: var(--spacing-xs) var(--spacing-sm);
@@ -58,10 +51,6 @@
   border: 1px solid #FCA5A5;
 }
 
-/* ============================================================
-   NODE CONTAINER
-   ============================================================ */
-
 .node {
   width: 100%;
   height: 100%;
@@ -83,10 +72,6 @@
   border-color: var(--color-border-dark);
 }
 
-/* ============================================================
-   NODE HEADER (Title Bar)
-   ============================================================ */
-
 .node__header {
   padding: var(--spacing-md) var(--spacing-lg);
   background-color: var(--color-header);
@@ -97,11 +82,27 @@
   user-select: none;
   letter-spacing: -0.3px;
   flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+}
+.node-remove-btn {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
 }
 
-/* ============================================================
-   NODE CONTENT (Body)
-   ============================================================ */
+.node-remove-btn:hover {
+  color: var(--color-text);
+}
 
 .node__content {
   padding: var(--spacing-lg);
@@ -128,10 +129,6 @@
 .node__content::-webkit-scrollbar-thumb:hover {
   background: var(--color-border-dark);
 }
-
-/* ============================================================
-   FORM INPUTS (Text, Textarea, Select)
-   ============================================================ */
 
 .input-base {
   width: 100%;
@@ -161,12 +158,10 @@
   color: var(--color-text-tertiary);
 }
 
-/* Text Input */
 input.input-base {
   font-family: system-ui, -apple-system, sans-serif;
 }
 
-/* Textarea */
 textarea.input-base {
   font-family: monospace;
   min-height: 60px;
@@ -177,7 +172,6 @@ textarea.input-base {
   line-height: 1.4;
 }
 
-/* Select Dropdown */
 select.input-base {
   cursor: pointer;
   appearance: none;
@@ -187,10 +181,6 @@ select.input-base {
   background-position: right 6px center;
   background-size: 12px;
 }
-
-/* ============================================================
-   FORM LABELS & GROUPS
-   ============================================================ */
 
 .label {
   display: block;
@@ -213,10 +203,6 @@ select.input-base {
   color: var(--color-text-secondary);
   margin-top: var(--spacing-xs);
 }
-
-/* ============================================================
-   HANDLES (Connection Points / Ports)
-   ============================================================ */
 
 .node-handle {
   width: 10px !important;
@@ -265,10 +251,6 @@ textarea.node-textarea:focus {
   box-shadow: 0 0 0 3px var(--color-primary-light);
 }
 
-/* ============================================================
-   AUTOCOMPLETE DROPDOWN (Text Node)
-   ============================================================ */
-
 .autocomplete-dropdown {
   position: fixed;
   background-color: var(--color-surface);
@@ -302,10 +284,6 @@ textarea.node-textarea:focus {
   color: var(--color-primary);
 }
 
-/* ============================================================
-   UTILITY CLASSES
-   ============================================================ */
-
 .flex-col {
   display: flex;
   flex-direction: column;
@@ -318,10 +296,6 @@ textarea.node-textarea:focus {
 .gap-lg {
   gap: var(--spacing-lg);
 }
-
-/* ============================================================
-   STATE CLASSES
-   ============================================================ */
 
 .error {
   border-color: var(--color-error) !important;
@@ -340,10 +314,6 @@ textarea.node-textarea:focus {
   pointer-events: none;
 }
 
-/* ============================================================
-   INFO BOX
-   ============================================================ */
-
 .info-box {
   padding: var(--spacing-md);
   background-color: var(--color-primary-light);
@@ -354,17 +324,9 @@ textarea.node-textarea:focus {
   margin-top: var(--spacing-md);
 }
 
-/* ============================================================
-   CANVAS BACKGROUND (optional)
-   ============================================================ */
-
 .react-flow__background {
   background-color: var(--color-background);
 }
-
-/* ============================================================
-   TOOLBAR & BUTTONS
-   ============================================================ */
 
 .toolbar {
   padding: var(--spacing-md);
@@ -410,10 +372,6 @@ textarea.node-textarea:focus {
   text-align: center;
 }
 
-/* ============================================================
-   SUBMIT BUTTON
-   ============================================================ */
-
 .button-submit-wrapper {
   display: flex;
   align-items: center;
@@ -443,10 +401,6 @@ textarea.node-textarea:focus {
   box-shadow: 0 0 0 3px var(--color-primary-light);
   transform: translateY(-1px);
 }
-
-/* ============================================================
-   PIPELINE ANALYSIS MODAL
-   ============================================================ */
 
 .modal-overlay {
   position: fixed;
@@ -497,7 +451,7 @@ textarea.node-textarea:focus {
   font-weight: 600;
 }
 
-.modal-close {
+.modal-close .node-remove-btn {
   background: none;
   border: none;
   font-size: 28px;

@@ -1,10 +1,12 @@
 // BaseNode.js
 
-import { Handle, Position } from 'reactflow';
+import { Handle } from 'reactflow';
+import { useStore } from '../store';
 import '../styles/nodeStyles.css';
 
 export const BaseNode = ({ id, config }) => {
   const { title, content, handles = [] } = config;
+  const removeNode = useStore((state) => state.removeNode);
 
   return (
     <div className="node">
@@ -15,12 +17,11 @@ export const BaseNode = ({ id, config }) => {
           onClick={() => removeNode(id)}
           title="Remove node"
         >
-          ✕
+          ×
         </button>
         </div>}
       <div className="node__content">{content}</div>
 
-      {/* Render all handles */}
       {handles.map((handle) => (
         <Handle
           key={handle.id}

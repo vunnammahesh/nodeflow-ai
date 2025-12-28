@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useReactFlow } from 'reactflow';
 import { BaseNode } from './BaseNode';
-import { PresetHandles, createHandle, HandlePositions } from './NodeFactory';
+import { PresetHandles } from './NodeFactory';
 import { useStore } from '../store';
 import '../styles/nodeStyles.css';
 

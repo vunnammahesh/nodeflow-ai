@@ -62,7 +62,6 @@ export const useStore = create((set, get) => ({
     const sourceRules = NODE_RULES[sourceType] || {};
     const targetRules = NODE_RULES[targetType] || {};
 
-    const outgoingCount = edges.filter((e) => e.source === source).length;
     const incomingCount = edges.filter((e) => e.target === target).length;
 
     if (sourceRules.maxOutgoing === 0) {
