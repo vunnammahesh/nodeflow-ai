@@ -8,7 +8,16 @@ export const BaseNode = ({ id, config }) => {
 
   return (
     <div className="node">
-      {title && <div className="node__header">{title}</div>}
+      {title && <div className="node__header">
+        <span>{title}</span>
+        <button
+          className="node-remove-btn"
+          onClick={() => removeNode(id)}
+          title="Remove node"
+        >
+          ✕
+        </button>
+        </div>}
       <div className="node__content">{content}</div>
 
       {/* Render all handles */}
